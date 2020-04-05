@@ -43,6 +43,7 @@ jobs:
     - stage: 'Alpine Issue Tracker'
       #      if: type = cron
       script:
+        - git config --global remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
         - go run main.go -target alpine
 
           #    - stage: 'Debian Security Bug Tracker'
