@@ -46,6 +46,7 @@ jobs:
         - whoami
         - env
         - echo $HOME
+        - sudo ls -alR /home/travis
         - go run main.go -target alpine
 
           #    - stage: 'Debian Security Bug Tracker'
