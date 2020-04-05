@@ -46,7 +46,7 @@ func (gc Config) CloneOrPull(url, repoPath string) (map[string]struct{}, error) 
 			return nil, err
 		}
 
-		if err := gc.fetchAll(repoPath); err != nil {
+		if err := fetchAll(repoPath); err != nil {
 			return nil, err
 		}
 
@@ -119,11 +119,15 @@ func pull(url, repoPath string) ([]string, error) {
 	return updatedFiles, nil
 }
 
-func (gc Config) fetchAll(repoPath string) error {
+func fetchAll(repoPath string) error {
 	commandArgs := generateGitArgs(repoPath)
-	branchCmd := []string{"fetch", "--all"}
-	_, err := utils.Exec("git", append(commandArgs, branchCmd...))
-	if err != nil {
+	configCmd := []string{"config", "remote.origin.fetch", "+refs/heads/*:refs/remotes/origin/*"}
+	if _, err := utils.Exec("git", append(commandArgs, configCmd...)); err != nil {
+		return xerrors.Errorf("error in git config: %w", err)
+	}
+
+	fetchCmd := []string{"fetch", "--all"}
+	if _, err := utils.Exec("git", append(commandArgs, fetchCmd...)); err != nil {
 		return xerrors.Errorf("error in git fetch: %w", err)
 	}
 	return nil
