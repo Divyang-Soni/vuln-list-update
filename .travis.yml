@@ -41,15 +41,8 @@ jobs:
           #        - go run main.go -target nvd
 
     - stage: 'Alpine Issue Tracker'
-      if: type = cron
+      #      if: type = cron
       script:
-        - whoami
-        - env
-        - echo $HOME
-        - git config --list
-        - git config --list --show-origin
-        - sudo ls -alR /var/lib/git
-        - sudo chown travis:travis -R /var/lib/git
         - go run main.go -target alpine
 
           #    - stage: 'Debian Security Bug Tracker'

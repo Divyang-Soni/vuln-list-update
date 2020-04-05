@@ -52,6 +52,8 @@ func (c Config) Update() (err error) {
 		return xerrors.Errorf("failed to show branches: %w", err)
 	}
 
+	log.Println(branches)
+
 	// restore branch
 	defer func() {
 		if derr := c.GitClient.Checkout(repoDir, "master"); derr != nil {
@@ -62,10 +64,12 @@ func (c Config) Update() (err error) {
 	for _, branch := range branches {
 		branch = strings.TrimSpace(branch)
 		if !strings.HasSuffix(branch, "-stable") {
+			log.Println("no -stable")
 			continue
 		}
 		s := strings.Split(branch, "/")
 		if len(s) < 2 {
+			log.Println("invalid branch")
 			continue
 		}
 		release := strings.TrimSuffix(s[1], "-stable")
