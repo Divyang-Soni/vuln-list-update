@@ -47,6 +47,8 @@ jobs:
         - git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
         - git config --global remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
         - git config --list --show-origin
+        - git clone https://git.alpinelinux.org/aports/
+        - cd aports && git branch --remote && git branch -a
         - go run main.go -target alpine
 
           #    - stage: 'Debian Security Bug Tracker'
