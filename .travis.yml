@@ -44,8 +44,8 @@ jobs:
       if: type = cron
       script:
         - whoami
-        - sudo ls -alR /var/lib/git/.config
-        - sudo chown -R travis:travis /var/lib/git/.config/git/attributes
+        - env
+        - echo $HOME
         - go run main.go -target alpine
 
           #    - stage: 'Debian Security Bug Tracker'
